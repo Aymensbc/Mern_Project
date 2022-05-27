@@ -73,11 +73,22 @@ const loginUser = asyncHandler(async (req, res) => {
 // @desc    Get User data
 // @route   GET api/users/me
 // @access  Private
+//Get me is a protected route where we are using custom midleware protect. So we can access user id from req.user since we had put user in req.user
 const getMe = asyncHandler(async (req, res) => {
-  res.json({ message: "get User" });
+  const { name, email, _id } = await User.findById(req.user.id);
+
+  res.status(200).json({
+    id: _id,
+    name,
+    email,
+  });
 });
 
 // Generate JWT token
+//we are putting id in the payload.jwt.sign is gonna use the following arguments:
+//1. id or whatever payload we are sending
+//2. the secret key
+//3. OPtions : expires in
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
