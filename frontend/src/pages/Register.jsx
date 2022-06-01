@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { register, reset } from "../features/auth/authSlice";
+import Spinner from "../components/Spinner";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -54,6 +55,10 @@ function Register() {
       dispatch(register(userData));
     }
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -111,9 +116,9 @@ function Register() {
             />
           </div>
           <div className="form-group">
-            <buttom type="submit" className="btn btn-block">
+            <button type="submit" className="btn btn-block">
               Submit
-            </buttom>
+            </button>
           </div>
         </form>
       </section>
