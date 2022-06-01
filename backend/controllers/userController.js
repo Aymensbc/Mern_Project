@@ -75,13 +75,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // @access  Private
 //Get me is a protected route where we are using custom midleware protect. So we can access user id from req.user since we had put user in req.user
 const getMe = asyncHandler(async (req, res) => {
-  const { name, email, _id } = await User.findById(req.user.id);
-
-  res.status(200).json({
-    id: _id,
-    name,
-    email,
-  });
+  res.status(200).json(req.user);
 });
 
 // Generate JWT token
